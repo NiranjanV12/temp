@@ -1,0 +1,44 @@
+swapoff -a
+kubeadm token create --print-join-command
+kubectl get all --all-namespaces
+kubectl label nodes slave-node kubernetes.io/role=worker
+-------------------------------------------------------------------------------------------------------
+install kubeadm
+install docker from website
++
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
++
+https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+53  sudo mkdir /etc/docker
+   54  cat <<EOF | sudo tee /etc/docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+   55  sudo systemctl enable docker
+   56  sudo systemctl daemon-reload
+   57  sudo systemctl restart docker
+***commands autocomplete bashrc***
+sudo kubeadm reset
+  436  sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+  437  mkdir -p $HOME/.kube
+  438  kubectl get all --all-namespaces
+  439  kubectl version
+  ----440  kubectl proxy --address 0.0.0.0 --accept-hosts '.*'
+  441  kubectl version
+  442  mkdir -p $HOME/.kube
+  443  kubectl version
+  444  kubectl get all --all-namespaces
+  445  kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+  464  kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+  465  watch kubectl get pods -n calico-system
+  466  kubectl get all --all-namespaces or -A
+  467  watch kubectl get pods -n calico-system
+  468  kubectl get all --all-namespaces
+--all-namespaces or -A
+kubectl get pods -o wide
